@@ -44,5 +44,19 @@ namespace TP4
             fc.MdiParent = this;
             fc.Show();
         }
+
+        private void TS_Btn_Q_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Vous été sur de quitter?", "Quitter", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+            
+        }
     }
 }

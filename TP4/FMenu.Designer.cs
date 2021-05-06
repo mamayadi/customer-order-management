@@ -94,6 +94,7 @@ namespace TP4
             this.TS_Btn_Q.Size = new System.Drawing.Size(68, 83);
             this.TS_Btn_Q.Text = "Quitter";
             this.TS_Btn_Q.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.TS_Btn_Q.Click += new System.EventHandler(this.TS_Btn_Q_Click);
             // 
             // FMenu
             // 

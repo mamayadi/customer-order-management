@@ -31,15 +31,18 @@ namespace TP4
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FListe_Prod));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.Txt_Ref = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.Txt_Desig = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.Cmb_Categ = new MetroFramework.Controls.MetroComboBox();
+            this.produitBindingSource3 = new System.Windows.Forms.BindingSource(this.components);
+            this.bdClientDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.bd_ClientDataSet = new TP4.Bd_ClientDataSet();
             this.Vider = new System.Windows.Forms.PictureBox();
             this.Rechercher = new System.Windows.Forms.PictureBox();
             this.Ajouter = new System.Windows.Forms.PictureBox();
@@ -52,8 +55,12 @@ namespace TP4
             this.prixVProdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.qteStockDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.produitBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.bd_ClientDataSet = new TP4.Bd_ClientDataSet();
             this.produitTableAdapter = new TP4.Bd_ClientDataSetTableAdapters.ProduitTableAdapter();
+            this.produitBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.produitBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.produitBindingSource3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bdClientDataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bd_ClientDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Vider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Rechercher)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Ajouter)).BeginInit();
@@ -61,7 +68,8 @@ namespace TP4
             ((System.ComponentModel.ISupportInitialize)(this.Modifier)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Dg_Prod)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.produitBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bd_ClientDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.produitBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.produitBindingSource2)).BeginInit();
             this.SuspendLayout();
             // 
             // metroLabel1
@@ -88,7 +96,7 @@ namespace TP4
             this.Txt_Ref.CustomButton.UseSelectable = true;
             this.Txt_Ref.CustomButton.Visible = false;
             this.Txt_Ref.Lines = new string[0];
-            this.Txt_Ref.Location = new System.Drawing.Point(129, 76);
+            this.Txt_Ref.Location = new System.Drawing.Point(129, 74);
             this.Txt_Ref.MaxLength = 32767;
             this.Txt_Ref.Name = "Txt_Ref";
             this.Txt_Ref.PasswordChar = '\0';
@@ -127,7 +135,7 @@ namespace TP4
             this.Txt_Desig.CustomButton.UseSelectable = true;
             this.Txt_Desig.CustomButton.Visible = false;
             this.Txt_Desig.Lines = new string[0];
-            this.Txt_Desig.Location = new System.Drawing.Point(327, 76);
+            this.Txt_Desig.Location = new System.Drawing.Point(327, 74);
             this.Txt_Desig.MaxLength = 32767;
             this.Txt_Desig.Name = "Txt_Desig";
             this.Txt_Desig.PasswordChar = '\0';
@@ -153,13 +161,31 @@ namespace TP4
             // 
             // Cmb_Categ
             // 
+            this.Cmb_Categ.DataSource = this.produitBindingSource3;
+            this.Cmb_Categ.DisplayMember = "Categ_Prod";
             this.Cmb_Categ.FormattingEnabled = true;
             this.Cmb_Categ.ItemHeight = 23;
-            this.Cmb_Categ.Location = new System.Drawing.Point(504, 76);
+            this.Cmb_Categ.Location = new System.Drawing.Point(504, 71);
             this.Cmb_Categ.Name = "Cmb_Categ";
             this.Cmb_Categ.Size = new System.Drawing.Size(121, 29);
             this.Cmb_Categ.TabIndex = 5;
             this.Cmb_Categ.UseSelectable = true;
+            this.Cmb_Categ.SelectedIndexChanged += new System.EventHandler(this.Cmb_Categ_SelectedIndexChanged);
+            // 
+            // produitBindingSource3
+            // 
+            this.produitBindingSource3.DataMember = "Produit";
+            this.produitBindingSource3.DataSource = this.bdClientDataSetBindingSource;
+            // 
+            // bdClientDataSetBindingSource
+            // 
+            this.bdClientDataSetBindingSource.DataSource = this.bd_ClientDataSet;
+            this.bdClientDataSetBindingSource.Position = 0;
+            // 
+            // bd_ClientDataSet
+            // 
+            this.bd_ClientDataSet.DataSetName = "Bd_ClientDataSet";
+            this.bd_ClientDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // Vider
             // 
@@ -167,11 +193,12 @@ namespace TP4
             this.Vider.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Vider.ImageLocation = "";
             this.Vider.InitialImage = ((System.Drawing.Image)(resources.GetObject("Vider.InitialImage")));
-            this.Vider.Location = new System.Drawing.Point(662, 63);
+            this.Vider.Location = new System.Drawing.Point(662, 55);
             this.Vider.Name = "Vider";
             this.Vider.Size = new System.Drawing.Size(71, 60);
             this.Vider.TabIndex = 7;
             this.Vider.TabStop = false;
+            this.Vider.Click += new System.EventHandler(this.Vider_Click);
             // 
             // Rechercher
             // 
@@ -182,6 +209,7 @@ namespace TP4
             this.Rechercher.Size = new System.Drawing.Size(67, 50);
             this.Rechercher.TabIndex = 8;
             this.Rechercher.TabStop = false;
+            this.Rechercher.Click += new System.EventHandler(this.Rechercher_Click);
             // 
             // Ajouter
             // 
@@ -203,6 +231,7 @@ namespace TP4
             this.Supprimer.Size = new System.Drawing.Size(67, 50);
             this.Supprimer.TabIndex = 10;
             this.Supprimer.TabStop = false;
+            this.Supprimer.Click += new System.EventHandler(this.Supprimer_Click);
             // 
             // Modifier
             // 
@@ -223,14 +252,14 @@ namespace TP4
             this.Dg_Prod.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Dg_Prod.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.Dg_Prod.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Dg_Prod.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Dg_Prod.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.Dg_Prod.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Dg_Prod.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.refProdDataGridViewTextBoxColumn,
@@ -239,32 +268,33 @@ namespace TP4
             this.prixVProdDataGridViewTextBoxColumn,
             this.qteStockDataGridViewTextBoxColumn});
             this.Dg_Prod.DataSource = this.produitBindingSource;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Dg_Prod.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Dg_Prod.DefaultCellStyle = dataGridViewCellStyle8;
             this.Dg_Prod.EnableHeadersVisualStyles = false;
             this.Dg_Prod.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.Dg_Prod.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.Dg_Prod.Location = new System.Drawing.Point(129, 141);
             this.Dg_Prod.Name = "Dg_Prod";
             this.Dg_Prod.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Dg_Prod.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Dg_Prod.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.Dg_Prod.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.Dg_Prod.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.Dg_Prod.Size = new System.Drawing.Size(542, 264);
             this.Dg_Prod.TabIndex = 12;
+            this.Dg_Prod.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dg_Prod_CellContentClick);
             // 
             // refProdDataGridViewTextBoxColumn
             // 
@@ -301,14 +331,19 @@ namespace TP4
             this.produitBindingSource.DataMember = "Produit";
             this.produitBindingSource.DataSource = this.bd_ClientDataSet;
             // 
-            // bd_ClientDataSet
-            // 
-            this.bd_ClientDataSet.DataSetName = "Bd_ClientDataSet";
-            this.bd_ClientDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // produitTableAdapter
             // 
             this.produitTableAdapter.ClearBeforeFill = true;
+            // 
+            // produitBindingSource1
+            // 
+            this.produitBindingSource1.DataMember = "Produit";
+            this.produitBindingSource1.DataSource = this.bd_ClientDataSet;
+            // 
+            // produitBindingSource2
+            // 
+            this.produitBindingSource2.DataMember = "Produit";
+            this.produitBindingSource2.DataSource = this.bd_ClientDataSet;
             // 
             // FListe_Prod
             // 
@@ -330,6 +365,9 @@ namespace TP4
             this.Name = "FListe_Prod";
             this.Text = "Liste des Produits";
             this.Load += new System.EventHandler(this.FListe_Prod_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.produitBindingSource3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bdClientDataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bd_ClientDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Vider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Rechercher)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Ajouter)).EndInit();
@@ -337,7 +375,8 @@ namespace TP4
             ((System.ComponentModel.ISupportInitialize)(this.Modifier)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Dg_Prod)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.produitBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bd_ClientDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.produitBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.produitBindingSource2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -365,5 +404,9 @@ namespace TP4
         private System.Windows.Forms.DataGridViewTextBoxColumn categProdDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn prixVProdDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn qteStockDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource produitBindingSource2;
+        private System.Windows.Forms.BindingSource produitBindingSource1;
+        private System.Windows.Forms.BindingSource bdClientDataSetBindingSource;
+        private System.Windows.Forms.BindingSource produitBindingSource3;
     }
 }

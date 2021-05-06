@@ -29,6 +29,7 @@ namespace TP4
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FProduit));
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.Txt_Ref = new MetroFramework.Controls.MetroTextBox();
@@ -41,6 +42,11 @@ namespace TP4
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.Txt_Qte = new MetroFramework.Controls.MetroTextBox();
             this.Btn_Enregistrer = new MetroFramework.Controls.MetroButton();
+            this.bd_ClientDataSet = new TP4.Bd_ClientDataSet();
+            this.produitBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.produitTableAdapter = new TP4.Bd_ClientDataSetTableAdapters.ProduitTableAdapter();
+            ((System.ComponentModel.ISupportInitialize)(this.bd_ClientDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.produitBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // metroLabel1
@@ -123,6 +129,8 @@ namespace TP4
             // 
             // Cmb_Categ
             // 
+            this.Cmb_Categ.DataSource = this.produitBindingSource;
+            this.Cmb_Categ.DisplayMember = "Categ_Prod";
             this.Cmb_Categ.FormattingEnabled = true;
             this.Cmb_Categ.ItemHeight = 23;
             this.Cmb_Categ.Location = new System.Drawing.Point(116, 189);
@@ -228,6 +236,21 @@ namespace TP4
             this.Btn_Enregistrer.TabIndex = 11;
             this.Btn_Enregistrer.Text = "      Enregistrer";
             this.Btn_Enregistrer.UseSelectable = true;
+            this.Btn_Enregistrer.Click += new System.EventHandler(this.Btn_Enregistrer_Click);
+            // 
+            // bd_ClientDataSet
+            // 
+            this.bd_ClientDataSet.DataSetName = "Bd_ClientDataSet";
+            this.bd_ClientDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // produitBindingSource
+            // 
+            this.produitBindingSource.DataMember = "Produit";
+            this.produitBindingSource.DataSource = this.bd_ClientDataSet;
+            // 
+            // produitTableAdapter
+            // 
+            this.produitTableAdapter.ClearBeforeFill = true;
             // 
             // FProduit
             // 
@@ -249,6 +272,8 @@ namespace TP4
             this.Name = "FProduit";
             this.Text = "Ajout Nouveau Produit";
             this.Load += new System.EventHandler(this.FProduit_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.bd_ClientDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.produitBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -267,5 +292,8 @@ namespace TP4
         private MetroFramework.Controls.MetroLabel metroLabel5;
         private MetroFramework.Controls.MetroTextBox Txt_Qte;
         private MetroFramework.Controls.MetroButton Btn_Enregistrer;
+        private Bd_ClientDataSet bd_ClientDataSet;
+        private System.Windows.Forms.BindingSource produitBindingSource;
+        private Bd_ClientDataSetTableAdapters.ProduitTableAdapter produitTableAdapter;
     }
 }

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace ClassADO
 {
-    class ProduitADO
+    public class ProduitADO
     {
-        public void Inserer(Produit p)
+        public static void Inserer(Produit p)
         {
             SqlCommand cmdaj = new SqlCommand("insert into Produit (Ref_Prod,Desig_Prod,Categ_Prod," +
                 "PrixV_Prod,Qte_Stock) values (@Ref,@Desig,@Categ,@Prix,@Qte)", Connexion.cn);
@@ -23,15 +23,15 @@ namespace ClassADO
             cmdaj.ExecuteNonQuery();
         }
 
-        public void Supprimer(int Ref)
+        public static void Supprimer(int Ref)
         {
-            string req = "Select * from Produit where Ref_Prod=@Ref";
+            string req = "Delete from Produit where Ref_Prod=@Ref";
             SqlCommand cmdsupp = new SqlCommand(req, Connexion.cn);
             cmdsupp.Parameters.AddWithValue("@Ref", Ref);
             cmdsupp.ExecuteNonQuery();
         }
 
-        public void Modifier(Produit p)
+        public static void Modifier(Produit p)
         {
             string req = "update Produit set Ref_Prod=@Ref, Desig_Prod=@Desig,Categ_Prod=@Categ," +
                 "PrixV_Prod=@Prix, Qte_Stock=@Qte where Ref_Prod=@Ref";
@@ -46,12 +46,21 @@ namespace ClassADO
 
         public static bool Existe_Produit(int Ref)
         {
-            SqlCommand cverif = new SqlCommand("select * from Produit where Ref_Prod = @Ref");
+            SqlCommand cverif = new SqlCommand("select * from Produit where Ref_Prod = @Ref", Connexion.cn);
             cverif.Parameters.AddWithValue("@Ref", Ref);
             SqlDataReader drverif = cverif.ExecuteReader();
             var res = drverif.HasRows;
             drverif.Close();
             return res;
+        }
+
+        public static DataTable Liste_Ref(int Ref)
+        {
+            DataTable dtpr = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter("select * from Produit where Ref_Prod = @Ref", Connexion.cn);
+            da.SelectCommand.Parameters.AddWithValue("@Ref", Ref);
+            da.Fill(dtpr);
+            return dtpr;
         }
 
         public static DataTable Liste_Produit()
