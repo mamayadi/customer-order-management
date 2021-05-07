@@ -54,6 +54,23 @@ namespace ClassADO
             return res;
         }
 
+        public static Produit Recherche_Ref(int Ref)
+        {
+            DataTable dtcl = new DataTable();
+            string req = "select * from Produit where Ref_Prod = @Ref";
+            SqlDataAdapter da = new SqlDataAdapter(req, Connexion.cn);
+            da.SelectCommand.Parameters.AddWithValue("@Ref", Ref);
+            da.Fill(dtcl);
+            return new Produit
+            {
+                Ref_Prod = int.Parse(dtcl.Rows[0][0].ToString()),
+                Desig_Prod = dtcl.Rows[0][1].ToString(),
+                Categ_Prod = dtcl.Rows[0][2].ToString(),
+                PrixV_Prod = int.Parse(dtcl.Rows[0][3].ToString()),
+                Qte_Stock = int.Parse(dtcl.Rows[0][4].ToString()),
+            };
+        }
+
         public static DataTable Liste_Ref(int Ref)
         {
             DataTable dtpr = new DataTable();

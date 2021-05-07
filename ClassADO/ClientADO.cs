@@ -94,7 +94,7 @@ namespace ClassADO
             return l;
         }
 
-        public static Client Recherche_cin(long cin)
+        public static Client Recherche_cin(int cin)
         {
             return Get_clients().SingleOrDefault(XmlReadMode => XmlReadMode.CIN_Cl == cin);
         }

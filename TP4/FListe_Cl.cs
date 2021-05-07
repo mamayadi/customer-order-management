@@ -77,7 +77,7 @@ namespace TP4
         {
             if (!string.IsNullOrEmpty(Txt_Cin.Text))
             {
-                Client cl = ClientADO.Recherche_cin(long.Parse(Txt_Cin.Text));
+                Client cl = ClientADO.Recherche_cin(int.Parse(Txt_Cin.Text));
                 if (cl != null)
                 {
                     Txt_Nom.Text = cl.Nom_Cl;

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace ClassADO
 {
-    class LigneCommandeADO
+    public class LigneCommandeADO
     {
-        public void Inserer(LigneCommande lc)
+        public static void Inserer(LigneCommande lc)
         {
             SqlCommand cmdaj = new SqlCommand("insert into LigneCommande (Num_Cde,Ref_Prod,Qte)" +
                 " values (@Num,@Ref,@Qte)", Connexion.cn);
@@ -21,7 +21,7 @@ namespace ClassADO
             cmdaj.ExecuteNonQuery();
         }
 
-        public void Supprimer(int NumCde)
+        public static void Supprimer(int NumCde)
         {
             string req = "Select * from LigneCommande where Num_Cde=@Num_Cde";
             SqlCommand cmdsupp = new SqlCommand(req, Connexion.cn);
@@ -29,7 +29,7 @@ namespace ClassADO
             cmdsupp.ExecuteNonQuery();
         }
 
-        public void Modifier(LigneCommande lc)
+        public static void Modifier(LigneCommande lc)
         {
             string req = "update Commande set Num_Cde=@Num, Ref_Prod=@Date,Qte=@Cin";
             SqlCommand cmdmaj = new SqlCommand(req, Connexion.cn);
@@ -49,13 +49,52 @@ namespace ClassADO
             return res;
         }
 
-        public static DataTable Liste_LigneCommande()
+        public static LigneCommande LigneCommande(int NumCde)
         {
+
+            DataTable dtcl = new DataTable();
+            string req = "select * from LigneCommande where Num_Cde=@Num";
+
+            SqlDataAdapter da = new SqlDataAdapter(req, Connexion.cn);
+            da.SelectCommand.Parameters.AddWithValue("@Num", NumCde);
+            da.Fill(dtcl);
+            if(dtcl.Rows.Count > 0)
+            {
+                return new LigneCommande
+                {
+                    NumCde = int.Parse(dtcl.Rows[0][0].ToString()),
+                    RefProd = int.Parse(dtcl.Rows[0][1].ToString()),
+                    Qte = int.Parse(dtcl.Rows[0][2].ToString()),
+
+                };
+            } 
+                return new LigneCommande();
+            
+            
+
+
+        }
+
+        public static List<LigneCommande> Liste_LigneCommande()
+        {
+            List<LigneCommande> lcs = new List<LigneCommande>();
             DataTable dtcl = new DataTable();
             string req = "select * from LigneCommande";
             SqlDataAdapter da = new SqlDataAdapter(req, Connexion.cn);
             da.Fill(dtcl);
-            return dtcl;
+            for (int i = 0; i < dtcl.Rows.Count; i++)
+            {
+                LigneCommande lc = new LigneCommande
+                {
+                    NumCde = int.Parse(dtcl.Rows[i][0].ToString()),
+                    RefProd = int.Parse(dtcl.Rows[i][1].ToString()),
+                    Qte = int.Parse(dtcl.Rows[i][2].ToString()),
+
+                };
+                lcs.Add(lc);
+            }
+            return lcs;
+
         }
 
         public static DataTable Liste_LigneCommande_Num(int NumCde)
@@ -75,5 +114,7 @@ namespace ClassADO
             da.Fill(dtpr);
             return dtpr;
         }
+
+
     }
 }
