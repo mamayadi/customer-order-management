@@ -14,8 +14,10 @@ namespace TP4
 {
     public partial class FCommande : MetroFramework.Forms.MetroForm
     {
-        public Produit produit;
         public LigneCommande lcSelected;
+        public Client clSelected;
+        public Commande cmdSelected;
+        public Produit prSelected;
         public FCommande()
         {
             InitializeComponent();
@@ -23,56 +25,74 @@ namespace TP4
 
         private void FCommande_Load(object sender, EventArgs e)
         {
-            // TODO: cette ligne de code charge les données dans la table 'bd_ClientLigneCommande.LigneCommande'. Vous pouvez la déplacer ou la supprimer selon les besoins.
-            this.ligneCommandeTableAdapter.Fill(this.bd_ClientLigneCommande.LigneCommande);
-            // TODO: cette ligne de code charge les données dans la table 'bd_ClientDataSet.Produit'. Vous pouvez la déplacer ou la supprimer selon les besoins.
-            this.produitTableAdapter.Fill(this.bd_ClientDataSet.Produit);
-            this.Affiche_Ligne_Commande();
-            Pan_LigC.Visible = true;
-
-
+            Affiche_Ligne_Commande();
+            Pan_LigC.Visible = false;
         }
 
         private void Nouv_Cde_Click(object sender, EventArgs e)
         {
-            int numCmd = int.Parse(Txt_NumCde.Text);
-            DateTime dteCmd = Date_Cde.Value.Date;
-            if (string.IsNullOrEmpty(numCmd.ToString()))
+
+            if (string.IsNullOrEmpty(Txt_NumCde.Text))
             {
                 MessageBox.Show("Numero commande invalid");
             }
-            else if (string.IsNullOrEmpty(dteCmd.ToString()))
+            else if (string.IsNullOrEmpty(Date_Cde.Value.Date.ToString()))
             {
                 MessageBox.Show("Date commande invalid");
             }
             else
             {
-                if (string.IsNullOrEmpty(Txt_Cin.Text))
+                int numCmd = int.Parse(Txt_NumCde.Text);
+                DateTime dteCmd = Date_Cde.Value.Date;
+                Commande commande = CommandeADO.Recherche_Commande_Num_Cde(numCmd);
+                if (commande != null)
                 {
-                    MessageBox.Show("CIN client invalid");
-                }
-                else
-                {
-                    Client cl = ClientADO.Recherche_cin(int.Parse(Txt_Cin.Text));
-                    if (cl != null)
+                    cmdSelected = commande;
+                    Pan_LigC.Visible = true;
+                    Txt_NumCde.Text = commande.Num_Cde.ToString();
+                    Date_Cde.Value = commande.Date_Cde;
+                    Client client = ClientADO.Recherche_cin(commande.CIN_Cl);
+                    if(client != null)
                     {
-                        Commande cmd = new Commande
-                        {
-                            Num_Cde = numCmd,
-                            Date_Cde = dteCmd,
-                            CIN_Cl = int.Parse(Txt_Cin.Text),
-                        };
-                        CommandeADO.Inserer(cmd);
-                        Pan_LigC.Visible = true;
-                        MessageBox.Show("Commande inserer");
+                        setClientFields(client);
+                        clSelected = client;
+                    }
 
+
+                } else
+                {
+                    if (string.IsNullOrEmpty(Txt_Cin.Text))
+                    {
+                        MessageBox.Show("CIN client invalid");
                     }
                     else
                     {
-                        MessageBox.Show("Client introuvable");
-                    }
+                        int cin = int.Parse(Txt_Cin.Text);
+                        Client cl = ClientADO.Recherche_cin(cin);
+                        if (cl != null)
+                        {
+                            setClientFields(cl);
+                            clSelected = cl;
+                            Commande cmd = new Commande
+                            {
+                                Num_Cde = numCmd,
+                                Date_Cde = dteCmd,
+                                CIN_Cl = cin,
+                            };
+                            CommandeADO.Inserer(cmd);
+                            Pan_LigC.Visible = true;
+                            cmdSelected = cmd;
+                            MessageBox.Show("Commande inserer");
 
+                        }
+                        else
+                        {
+                            MessageBox.Show("Client introuvable");
+                        }
+
+                    }
                 }
+                
 
             }
         }
@@ -81,26 +101,29 @@ namespace TP4
         {
             Txt_NumCde.Clear();
             Date_Cde.ResetText();
+            cmdSelected = null;
         }
 
         private void Txt_NumCde_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (Convert.ToInt32(e.KeyChar) == 13)
             {
-                int numCmd = int.Parse(Txt_NumCde.Text);
-                if (!string.IsNullOrEmpty(numCmd.ToString()))
+                if (!string.IsNullOrEmpty(Txt_NumCde.Text))
                 {
+                    int numCmd = int.Parse(Txt_NumCde.Text);
                     Commande cmd = CommandeADO.Recherche_Commande_Num_Cde(numCmd);
                     if (cmd != null)
                     {
+                        cmdSelected = cmd;
                         Client cl = ClientADO.Recherche_cin(cmd.CIN_Cl);
                         if (cl != null)
                         {
-                            Txt_Cin.Text = cl.CIN_Cl.ToString();
-                            Txt_Nom.Text = cl.Nom_Cl;
-                            Txt_Pren.Text = cl.Pren_Cl;
-                            Txt_Vil.Text = cl.Ville_Cl;
-                            Txt_Tel.Text = cl.Tel_Cl;
+                            clSelected = cl;
+                            setClientFields(cl);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Client introuvable");
                         }
                     }
                     else
@@ -108,7 +131,20 @@ namespace TP4
                         Nouv_Cde_Click(sender, e);
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Entrer numero de commande");
+                }
             }
+        }
+
+        private void setClientFields(Client cl)
+        {
+            Txt_Cin.Text = cl.CIN_Cl.ToString();
+            Txt_Nom.Text = cl.Nom_Cl;
+            Txt_Pren.Text = cl.Pren_Cl;
+            Txt_Vil.Text = cl.Ville_Cl;
+            Txt_Tel.Text = cl.Tel_Cl;
         }
 
         private void Vider_Clt_Click(object sender, EventArgs e)
@@ -118,6 +154,7 @@ namespace TP4
             Txt_Pren.Clear();
             Txt_Vil.Clear();
             Txt_Tel.Clear();
+            clSelected = null;
         }
 
         private void Affiche_Ligne_Commande()
@@ -154,23 +191,33 @@ namespace TP4
                         fc.ShowDialog();
                         if (FListe_Prod.produit != null)
                         {
-                            this.produit = FListe_Prod.produit;
-                            if (produit != null)
+                            prSelected = FListe_Prod.produit;
+                            if (prSelected != null)
                             {
                                 LigneCommande lc = new LigneCommande
                                 {
-                                    NumCde = int.Parse(Txt_NumCde.Text),
-                                    RefProd = this.produit.Ref_Prod,
+                                    NumCde = cmd.Num_Cde,
+                                    RefProd = prSelected.Ref_Prod,
                                     Qte = int.Parse(Txt_Qte.Text)
                                 };
                                 LigneCommandeADO.Inserer(lc);
                                 Affiche_Ligne_Commande();
+                                Vider_Clt_Click(sender, e);
+                                Vider_Cde_Click(sender, e);
+                                lcSelected = null;
+                                prSelected = null;
+                                cmdSelected = null;
+                                clSelected = null;
                                 MessageBox.Show("Ligne Commande inserer");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Sélectionner un produit");
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Selectioner un produit");
+                            MessageBox.Show("Sélectionner un produit");
                         }
                     }
                     else
@@ -197,14 +244,24 @@ namespace TP4
                 Client cl = ClientADO.Recherche_cin(int.Parse(Txt_Cin.Text));
                 if (cl != null)
                 {
-                    Txt_Cin.Text = cl.CIN_Cl.ToString();
-                    Txt_Nom.Text = cl.Nom_Cl;
-                    Txt_Pren.Text = cl.Pren_Cl;
-                    Txt_Vil.Text = cl.Ville_Cl;
-                    Txt_Tel.Text = cl.Tel_Cl;
+                    setClientFields(cl);
+                    clSelected = cl;
+                }
+                else
+                {
+                    Client client = new Client
+                    {
+                        CIN_Cl = int.Parse(Txt_Cin.Text),
+                        Nom_Cl = Txt_Nom.Text,
+                        Pren_Cl = Txt_Pren.Text,
+                        Ville_Cl = Txt_Vil.Text,
+                        Tel_Cl = Txt_Tel.Text
+                    };
+                    ClientADO.Inserer(client);
+                    clSelected = client;
+                    MessageBox.Show("Client ajouté avec succès");
                 }
             }
-
         }
 
         private void Dg_Prod_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -215,20 +272,47 @@ namespace TP4
             int prix = int.Parse(Dg_Prod.Rows[index].Cells[2].Value.ToString());
             int qte = int.Parse(Dg_Prod.Rows[index].Cells[3].Value.ToString());
             int total = int.Parse(Dg_Prod.Rows[index].Cells[4].Value.ToString());
-            lcSelected = LigneCommandeADO.LigneCommande(refe);
-
+            LigneCommande lc = LigneCommandeADO.LigneCommande(refe);
+            if (lc != null)
+            {
+                lcSelected = lc;
+                Txt_Qte.Text = lc.Qte.ToString();
+                Commande cmd = CommandeADO.Recherche_Commande_Num_Cde(lc.NumCde);
+                if (cmd != null)
+                {
+                    cmdSelected = cmd;
+                    Txt_NumCde.Text = cmd.Num_Cde.ToString();
+                    Date_Cde.Text = cmd.Date_Cde.ToString();
+                    Client client = ClientADO.Recherche_cin(cmd.CIN_Cl);
+                    if (client != null)
+                    {
+                        setClientFields(client);
+                        clSelected = client;
+                    }
+                }
+                Produit pr = ProduitADO.Recherche_Ref(lc.RefProd);
+                if (pr != null)
+                {
+                    prSelected = pr;
+                }
+            }
         }
 
         private void Supp_Lig_Click(object sender, EventArgs e)
         {
-            if(lcSelected != null)
+            if (lcSelected != null)
             {
-                DialogResult dialogResult = MessageBox.Show("Vous été sur de supprimer la ligne commande ", "Supprimer ligne commande", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("Vous été sur de supprimer la ligne commande?", "Supprimer ligne commande", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     LigneCommandeADO.Supprimer(lcSelected.NumCde);
+                    
+                    lcSelected = null;
+                    clSelected = null;
+                    cmdSelected = null;
+                    prSelected = null;
                     Affiche_Ligne_Commande();
-                    MessageBox.Show("Ligne commande supprimer avec succées!");
+                    MessageBox.Show("Ligne commande supprimer avec succès!");
                 }
                 else if (dialogResult == DialogResult.No)
                 {
@@ -237,7 +321,7 @@ namespace TP4
             }
             else
             {
-                MessageBox.Show("Selectioner une ligne commande!");
+                MessageBox.Show("Sélectionner une ligne commande!");
             }
         }
 
@@ -245,11 +329,25 @@ namespace TP4
         {
             if (lcSelected != null)
             {
+                if (prSelected != null)
+                {
+                    lcSelected.RefProd = prSelected.Ref_Prod;
+                }
+                if (cmdSelected != null)
+                {
+                    lcSelected.NumCde = cmdSelected.Num_Cde;
+                }
+                if (!string.IsNullOrEmpty(Txt_Qte.Text))
+                {
+                    lcSelected.Qte = int.Parse(Txt_Qte.Text);
+                }
                 LigneCommandeADO.Modifier(lcSelected);
-                MessageBox.Show("Ligne commande modifier avec succées!");
-            } else
+                Affiche_Ligne_Commande();
+                MessageBox.Show("Ligne commande modifié avec succès!");
+            }
+            else
             {
-                MessageBox.Show("Selectioner une ligne commande!");
+                MessageBox.Show("Sélectionner une ligne commande!");
             }
         }
     }

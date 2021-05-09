@@ -40,17 +40,25 @@ namespace TP4
         private void Modifier_Click(object sender, EventArgs e)
         {
             TypeOP = edit;
-            FProduit fc = new FProduit(this);
-            fc.Text = "Modification de Produit";
-            fc.MdiParent = this.ParentForm;
-            fc.Show();
+            if (produit != null)
+            {
+                FProduit fc = new FProduit(this);
+                fc.Text = "Modification de Produit";
+                fc.MdiParent = this.ParentForm;
+                fc.Show();
+            }
+            else
+            {
+                MessageBox.Show("Selectionné un produit!");
+            }
+
         }
 
         private void Vider_Click(object sender, EventArgs e)
         {
             Txt_Ref.Clear();
             Txt_Desig.Clear();
-            if (!string.IsNullOrEmpty(Cmb_Categ.Text) )
+            if (!string.IsNullOrEmpty(Cmb_Categ.Text))
             {
                 Cmb_Categ.SelectedIndex = -1;
             }
@@ -79,7 +87,7 @@ namespace TP4
 
         private void Supprimer_Click(object sender, EventArgs e)
         {
-            if(produit != null)
+            if (produit != null)
             {
                 DialogResult dialogResult = MessageBox.Show("Vous été sur de supprimer ce produit?", "Supprimer", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
@@ -91,8 +99,9 @@ namespace TP4
                 {
                     //do something else
                 }
-                
-            } else
+
+            }
+            else
             {
                 MessageBox.Show("Selectionné un produit!");
             }
@@ -124,10 +133,30 @@ namespace TP4
             if (!string.IsNullOrEmpty(Cmb_Categ.Text))
             {
                 Dg_Prod.DataSource = ProduitADO.Liste_Categ_Prod(Cmb_Categ.Text);
-            } else
+            }
+            else
             {
                 Dg_Prod.DataSource = ProduitADO.Liste_Produit();
             }
+        }
+
+        private void Dg_Prod_DoubleClick(object sender, EventArgs e)
+        {
+            int index = Dg_Prod.CurrentRow.Index;
+            int refe = int.Parse(Dg_Prod.Rows[index].Cells[0].Value.ToString());
+            String desig = Dg_Prod.Rows[index].Cells[1].Value.ToString();
+            String categ = Dg_Prod.Rows[index].Cells[2].Value.ToString();
+            int prix = int.Parse(Dg_Prod.Rows[index].Cells[3].Value.ToString());
+            int qte = int.Parse(Dg_Prod.Rows[index].Cells[4].Value.ToString());
+            produit = new Produit
+            {
+                Ref_Prod = refe,
+                Desig_Prod = desig,
+                Categ_Prod = categ,
+                PrixV_Prod = prix,
+                Qte_Stock = qte
+            };
+            this.Close();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace ClassADO
 
         public static void Supprimer(int NumCde)
         {
-            string req = "Select * from LigneCommande where Num_Cde=@Num_Cde";
+            string req = "Delete from LigneCommande where Num_Cde=@Num_Cde";
             SqlCommand cmdsupp = new SqlCommand(req, Connexion.cn);
             cmdsupp.Parameters.AddWithValue("@Num_Cde", NumCde);
             cmdsupp.ExecuteNonQuery();
@@ -31,7 +31,7 @@ namespace ClassADO
 
         public static void Modifier(LigneCommande lc)
         {
-            string req = "update Commande set Num_Cde=@Num, Ref_Prod=@Date,Qte=@Cin";
+            string req = "update LigneCommande set Num_Cde=@Num, Ref_Prod=@Ref, Qte=@Qte where Num_Cde=@Num";
             SqlCommand cmdmaj = new SqlCommand(req, Connexion.cn);
             cmdmaj.Parameters.AddWithValue("@Num", lc.NumCde);
             cmdmaj.Parameters.AddWithValue("@Ref", lc.RefProd);

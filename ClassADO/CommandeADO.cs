@@ -23,7 +23,7 @@ namespace ClassADO
 
         public static void Supprimer(int Num_Cde)
         {
-            string req = "Select * from Commande where Num_Cde=@Num_Cde";
+            string req = "Delete from Commande where Num_Cde=@Num_Cde";
             SqlCommand cmdsupp = new SqlCommand(req, Connexion.cn);
             cmdsupp.Parameters.AddWithValue("@Num_Cde", Num_Cde);
             cmdsupp.ExecuteNonQuery();
@@ -58,9 +58,9 @@ namespace ClassADO
             da.Fill(dtcl);
             return new Commande
             {
-                CIN_Cl = int.Parse(dtcl.Rows[0][0].ToString()),
+                Num_Cde = int.Parse(dtcl.Rows[0][0].ToString()),
                 Date_Cde = Convert.ToDateTime(dtcl.Rows[0][1].ToString()),
-                Num_Cde = int.Parse(dtcl.Rows[0][2].ToString()),
+                CIN_Cl = int.Parse(dtcl.Rows[0][2].ToString()),
             };
         }
 
