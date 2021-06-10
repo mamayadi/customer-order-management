@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClassBL;
 using ClassADO;
@@ -25,6 +18,11 @@ namespace TP4
         public void FListe_Prod_Load(object sender, EventArgs e)
         {
             // TODO: cette ligne de code charge les données dans la table 'bd_ClientDataSet.Produit'. Vous pouvez la déplacer ou la supprimer selon les besoins.
+            this.loadGrid();
+        }
+
+        public void loadGrid()
+        {
             this.produitTableAdapter.Fill(this.bd_ClientDataSet.Produit);
         }
 

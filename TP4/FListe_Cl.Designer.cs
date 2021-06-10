@@ -39,8 +39,8 @@ namespace TP4
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Txt_Cin = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.Txt_Vil = new MetroFramework.Controls.MetroLabel();
-            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
+            this.label_ville = new MetroFramework.Controls.MetroLabel();
+            this.Txt_Vil = new MetroFramework.Controls.MetroTextBox();
             this.testttt = new MetroFramework.Controls.MetroLabel();
             this.Txt_Nom = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
@@ -112,44 +112,44 @@ namespace TP4
             this.metroLabel1.TabIndex = 1;
             this.metroLabel1.Text = "CIN";
             // 
+            // label_ville
+            // 
+            this.label_ville.AutoSize = true;
+            this.label_ville.Location = new System.Drawing.Point(27, 119);
+            this.label_ville.Name = "label_ville";
+            this.label_ville.Size = new System.Drawing.Size(33, 19);
+            this.label_ville.TabIndex = 3;
+            this.label_ville.Text = "Ville";
+            // 
             // Txt_Vil
             // 
-            this.Txt_Vil.AutoSize = true;
-            this.Txt_Vil.Location = new System.Drawing.Point(27, 119);
+            // 
+            // 
+            // 
+            this.Txt_Vil.CustomButton.Image = null;
+            this.Txt_Vil.CustomButton.Location = new System.Drawing.Point(71, 1);
+            this.Txt_Vil.CustomButton.Name = "";
+            this.Txt_Vil.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.Txt_Vil.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.Txt_Vil.CustomButton.TabIndex = 1;
+            this.Txt_Vil.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.Txt_Vil.CustomButton.UseSelectable = true;
+            this.Txt_Vil.CustomButton.Visible = false;
+            this.Txt_Vil.Lines = new string[0];
+            this.Txt_Vil.Location = new System.Drawing.Point(66, 117);
+            this.Txt_Vil.MaxLength = 32767;
             this.Txt_Vil.Name = "Txt_Vil";
-            this.Txt_Vil.Size = new System.Drawing.Size(33, 19);
-            this.Txt_Vil.TabIndex = 3;
-            this.Txt_Vil.Text = "Ville";
-            // 
-            // metroTextBox1
-            // 
-            // 
-            // 
-            // 
-            this.metroTextBox1.CustomButton.Image = null;
-            this.metroTextBox1.CustomButton.Location = new System.Drawing.Point(71, 1);
-            this.metroTextBox1.CustomButton.Name = "";
-            this.metroTextBox1.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox1.CustomButton.TabIndex = 1;
-            this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox1.CustomButton.UseSelectable = true;
-            this.metroTextBox1.CustomButton.Visible = false;
-            this.metroTextBox1.Lines = new string[0];
-            this.metroTextBox1.Location = new System.Drawing.Point(66, 117);
-            this.metroTextBox1.MaxLength = 32767;
-            this.metroTextBox1.Name = "metroTextBox1";
-            this.metroTextBox1.PasswordChar = '\0';
-            this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox1.SelectedText = "";
-            this.metroTextBox1.SelectionLength = 0;
-            this.metroTextBox1.SelectionStart = 0;
-            this.metroTextBox1.ShortcutsEnabled = true;
-            this.metroTextBox1.Size = new System.Drawing.Size(93, 23);
-            this.metroTextBox1.TabIndex = 2;
-            this.metroTextBox1.UseSelectable = true;
-            this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.Txt_Vil.PasswordChar = '\0';
+            this.Txt_Vil.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.Txt_Vil.SelectedText = "";
+            this.Txt_Vil.SelectionLength = 0;
+            this.Txt_Vil.SelectionStart = 0;
+            this.Txt_Vil.ShortcutsEnabled = true;
+            this.Txt_Vil.Size = new System.Drawing.Size(93, 23);
+            this.Txt_Vil.TabIndex = 2;
+            this.Txt_Vil.UseSelectable = true;
+            this.Txt_Vil.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.Txt_Vil.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // testttt
             // 
@@ -475,8 +475,8 @@ namespace TP4
             this.Controls.Add(this.Txt_Tel);
             this.Controls.Add(this.testttt);
             this.Controls.Add(this.Txt_Nom);
+            this.Controls.Add(this.label_ville);
             this.Controls.Add(this.Txt_Vil);
-            this.Controls.Add(this.metroTextBox1);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.Txt_Cin);
             this.Name = "FListe_Cl";
@@ -500,8 +500,8 @@ namespace TP4
 
         private MetroFramework.Controls.MetroTextBox Txt_Cin;
         private MetroFramework.Controls.MetroLabel metroLabel1;
-        private MetroFramework.Controls.MetroLabel Txt_Vil;
-        private MetroFramework.Controls.MetroTextBox metroTextBox1;
+        private MetroFramework.Controls.MetroLabel label_ville;
+        private MetroFramework.Controls.MetroTextBox Txt_Vil;
         private MetroFramework.Controls.MetroLabel testttt;
         private MetroFramework.Controls.MetroTextBox Txt_Nom;
         private MetroFramework.Controls.MetroLabel metroLabel4;

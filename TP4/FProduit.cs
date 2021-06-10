@@ -28,11 +28,12 @@ namespace TP4
             if (FListe_Prod.TypeOP.Equals('M'))
             {
                 Txt_Ref.Text = FListe_Prod.produit.Ref_Prod.ToString();
+                Txt_Ref.Enabled = false;
                 Txt_Desig.Text = FListe_Prod.produit.Desig_Prod.ToString();
+                Cmb_Categ.Text = FListe_Prod.produit.Categ_Prod.ToString();
                 Txt_Prix.Text = FListe_Prod.produit.PrixV_Prod.ToString();
                 Txt_Qte.Text = FListe_Prod.produit.Qte_Stock.ToString();
-                Txt_Ref.Text = FListe_Prod.produit.Ref_Prod.ToString();
-                Txt_Ref.Enabled = false;
+                
             }
 
         }
@@ -81,7 +82,7 @@ namespace TP4
                 {
                     ProduitADO.Inserer(produit);
                 }
-                this.form.FListe_Prod_Load(sender, e);
+                this.form.loadGrid();
                 this.Close();   
             }
         }
